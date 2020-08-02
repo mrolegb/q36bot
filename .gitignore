@@ -1,0 +1,6 @@
+.idea/
+.idea/libraries/R_User_Library.xml
+.idea/vcs.xml
+__pycache__/
+secure.py
+secure.pyc
