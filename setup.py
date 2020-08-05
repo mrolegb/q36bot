@@ -11,7 +11,6 @@ c.execute('''DROP TABLE IF EXISTS questions''')
 c.execute('''DROP TABLE IF EXISTS answers''')
 
 
-# Create tables
 c.execute('''CREATE TABLE users (
                 user_id INTEGER PRIMARY KEY,
                 status TEXT
@@ -39,6 +38,7 @@ c.execute('''CREATE TABLE answers (
                 answer TEXT,
                 created DATETIME
                 )''')
+
 
 c.execute(u'''INSERT INTO questions (question)
 VALUES
@@ -80,9 +80,7 @@ VALUES
 ('Поделись личной проблемой и спроси партнера, как он бы справился с ней. Затем спроси, что он думает о твоих чувствах по поводу этой проблемы.')
 ''')
 
-# Save (commit) the changes
+
 conn.commit()
 
-# We can also close the connection if we are done with it.
-# Just be sure any changes have been committed or they will be lost.
 conn.close()

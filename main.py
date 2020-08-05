@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from db_commands import get_question, create_update_user, get_user_status, get_all_users
-from secure import API_KEY
+from secure import API_KEY, ADMIN_ID
 from aiogram import Bot, Dispatcher, executor, types
 
 import logging
@@ -20,7 +20,7 @@ async def get_questions(message: types.Message):
     await message.answer(get_question(), parse_mode='Markdown')
 
 
-@dp.message_handler(commands=['new_project'])
+@dp.message_handler(commands=['newproject'])
 async def ready_user(message: types.Message):
     create_update_user(message.from_user.id, 'NEW_PROJECT')
     await message.answer(u'Введите название проекта:', parse_mode='Markdown')
@@ -39,7 +39,8 @@ async def read_input(message: types.Message):
 
 @dp.message_handler(commands=['users'])
 async def get_users(message: types.Message):
-    await message.answer(get_all_users())
+    if message.from_user.id == ADMIN_ID:
+        await message.answer(get_all_users())
 
 
 if __name__ == '__main__':
