@@ -12,6 +12,11 @@ c.execute('''DROP TABLE IF EXISTS answers''')
 
 
 # Create tables
+c.execute('''CREATE TABLE users (
+                user_id INTEGER PRIMARY KEY,
+                status TEXT
+                )''')
+
 c.execute('''CREATE TABLE projects (
                 id INTEGER PRIMARY KEY AUTOINCREMENT, 
                 alias TEXT, 
