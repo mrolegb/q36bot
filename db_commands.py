@@ -1,19 +1,39 @@
+from datetime import datetime
 from db_manager import DatabaseManager
 
 
-def create_update_user(user_id, status):
+def create_project(user_id, alias):
     db = DatabaseManager('db.db')
-    db.query('''INSERT OR REPLACE INTO users (user_id, status)
-                    VALUES (%d, '%s')''' % (user_id, status))
+    db.query('''INSERT INTO projects (user_id, alias, delay, status, created)
+                    VALUES (%d, '%s', 3, 'NEW', '%s')''' % (user_id, alias, datetime.now()))
 
 
-def create_update_project():
-    pass
-
-
-def get_user_status(user_id):
+def update_project(alias, status):
     db = DatabaseManager('db.db')
-    return db.query('''SELECT status FROM users WHERE user_id = %d''' % user_id).fetchall()
+    db.query('''UPDATE projects SET status = '%s', updated = '%s'
+                    WHERE alias = '%s' ''' % (status, datetime.now(), alias))
+
+
+def set_timer(alias, timer):
+    db = DatabaseManager('db.db')
+    db.query('''UPDATE projects SET delay = %d, updated = '%s'
+                    WHERE alias = '%s' ''' % (timer, datetime.now(), alias))
+
+
+def get_project(alias):
+    db = DatabaseManager('db.db')
+    result = db.query('''SELECT * FROM projects
+                    WHERE alias = '%s' ''' % alias)
+    return u'''*Проект:*''' + str(result.fetchall()[0])
+
+
+def get_all_projects():
+    db = DatabaseManager('db.db')
+    result = db.query('''SELECT * FROM projects''')
+    all_projects = u''
+    for r in result.fetchall():
+        all_projects += str(r) + '''\n'''
+    return all_projects
 
 
 def get_question(question_id=None):
@@ -23,11 +43,6 @@ def get_question(question_id=None):
         return result.fetchall()[question_id][1]
     else:
         q = u'''*Вопросы:*\n'''
-        for question in c.fetchall():
+        for question in result.fetchall():
             q += (str(question[0]) + '. ' + question[1] + '\n')
         return q
-
-
-def get_all_users():
-    db = DatabaseManager('db.db')
-    return db.query('''SELECT * FROM users''').fetchall()

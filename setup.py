@@ -10,20 +10,14 @@ c.execute('''DROP TABLE IF EXISTS projects''')
 c.execute('''DROP TABLE IF EXISTS questions''')
 c.execute('''DROP TABLE IF EXISTS answers''')
 
-
-c.execute('''CREATE TABLE users (
-                user_id INTEGER PRIMARY KEY,
-                status TEXT
-                )''')
-
 c.execute('''CREATE TABLE projects (
                 id INTEGER PRIMARY KEY AUTOINCREMENT, 
                 alias TEXT, 
-                name TEXT,
                 status TEXT,
-                owner_id TEXT, 
-                created DATETIME,
-                updated DATETIME
+                user_id INTEGER, 
+                delay INTEGER,
+                created TIMESTAMP,
+                updated TIMESTAMP
                 )''')
 
 c.execute('''CREATE TABLE questions (
@@ -36,7 +30,7 @@ c.execute('''CREATE TABLE answers (
                 project_id INTEGER,
                 question_id INTEGER,
                 answer TEXT,
-                created DATETIME
+                created TIMESTAMP
                 )''')
 
 
