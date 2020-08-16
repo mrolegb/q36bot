@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from db_commands import get_question, create_project, get_project, get_all_projects, set_timer
+from db_commands import get_question, create_project, get_project, get_all_projects, set_timer, update_status
 from secure import API_KEY, ADMIN_ID
 from aiogram import Bot, Dispatcher, executor, types
 
@@ -48,10 +48,14 @@ async def read_input(message: types.Message):
                              parse_mode='Markdown')
 
     if u'-запустить' in message.text:
-        pass
+        name = message.text.split()[-1]
+        update_status(name, 'ACTIVE')
+        await message.answer(u'*Запущен проект:* ' + name, parse_mode='Markdown')
 
     if u'-остановить' in message.text:
-        pass
+        name = message.text.split()[-1]
+        update_status(name, 'STOPPED')
+        await message.answer(u'*Остановлен проект:* ' + name, parse_mode='Markdown')
 
 
 if __name__ == '__main__':

@@ -8,7 +8,7 @@ def create_project(user_id, alias):
                     VALUES (%d, '%s', 3, 'NEW', '%s')''' % (user_id, alias, datetime.now()))
 
 
-def update_project(alias, status):
+def update_status(alias, status):
     db = DatabaseManager('db.db')
     db.query('''UPDATE projects SET status = '%s', updated = '%s'
                     WHERE alias = '%s' ''' % (status, datetime.now(), alias))
